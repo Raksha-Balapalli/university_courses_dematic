@@ -1,0 +1,23 @@
+# docker-compose.yml
+version: '3'
+services:
+  api:
+    build:
+     context: .
+     dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - FLASK_APP=api/__init__.py
+      - FLASK_ENV=development
+    depends_on:
+      - db
+    command: flask run --host=0.0.0.0
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: university_courses
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+    - "5432:5432"
